@@ -12,7 +12,10 @@ const sequelize = new Sequelize({
 });
 
 const modelDefiners = [
-	require('./models/user.model')
+	require('./models/user.model'),
+	require('./models/project.model'),
+	require('./models/builder.model'),
+	require('./models/city.model')
 	// Add more models here...
 	// require('./models/item'),
 ];

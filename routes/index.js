@@ -11,9 +11,6 @@ router.get('/login', function(req, res, next) {
   res.render('login', { title: 'Express' });
 });
 
-router.post('/login', passport.authenticate('local', { failureRedirect: '/login' }),  function(req, res) {
-	console.log(req.user)
-	res.redirect('/users');
-});
+router.post('/login', passport.authenticate('local', { successReturnToOrRedirect: '/users', failureRedirect: '/login' }));
 
 module.exports = router;

@@ -1,5 +1,4 @@
 const sequelize = require('../sequelize');
-const builderModel = require('../sequelize/models/builder.model');
 const { pickRandom, randomDate } = require('./helpers/random');
 
 async function reset() {
@@ -37,7 +36,7 @@ async function reset() {
 		
 		var obj = await sequelize.models.builder
 		.findOne({ where: {name: builder} })
-		
+
 		// update
 		if(obj) {
 			project.update({builderId: obj.id});

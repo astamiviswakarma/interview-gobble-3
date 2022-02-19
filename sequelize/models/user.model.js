@@ -22,5 +22,13 @@ module.exports = (sequelize) => {
 				is: /^\w{3,}$/
 			}
 		},
+		password: {
+			allowNull: false,
+			type: DataTypes.STRING
+		},
+		salt: {
+			allowNull: false,
+			type: DataTypes.STRING
+		}
 	});
 };

@@ -61,4 +61,4 @@ typings/
 .next
 package-lock.json
 yarn.lock
-sqlite-example-database/
+sqlite-example-database/*.sqlite

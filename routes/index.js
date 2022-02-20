@@ -12,12 +12,21 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
+/**
+ * login page
+ */
 router.get('/login', function(req, res, next) {
   res.render('login', { title: 'Express' });
 });
 
+/**
+ * login handler for local database
+ */
 router.post('/login', passport.authenticate('local', { successReturnToOrRedirect: '/users', failureRedirect: '/login' }));
 
+/**
+ * search all implementation
+ */
 router.get('/searchall/:search', connectEnsureLogin.ensureLoggedIn(), async function(req, res) {
   res.send(await async.parallel({
     cities: callback => city.findAll({

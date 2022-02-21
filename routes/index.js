@@ -24,4 +24,8 @@ router.get('/login', function(req, res, next) {
  */
 router.post('/login', passport.authenticate('local', { successReturnToOrRedirect: '/', failureRedirect: '/login' }));
 
+router.get('/facebook', passport.authenticate('facebook'));
+
+router.get('/facebook/callback', passport.authenticate('facebook', { successReturnToOrRedirect: '/', failureRedirect: '/login' }));
+
 module.exports = router;

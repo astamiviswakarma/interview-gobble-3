@@ -29,6 +29,10 @@ module.exports = (sequelize) => {
 		salt: {
 			allowNull: false,
 			type: DataTypes.STRING
+		},
+		facebookId: {
+			allowNull: true,
+			type: DataTypes.STRING
 		}
 	});
 };

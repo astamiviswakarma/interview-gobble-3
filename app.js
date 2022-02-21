@@ -7,12 +7,14 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const passport = require('passport');
 const apiKeyAuth = require('api-key-auth');
+const { facebookHandler } = require('./lib/facebook-handler');
+const FacebookStrategy = require('passport-facebook').Strategy;
 
 const sequelize = require('./sequelize');
 const { user } = sequelize.models;
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var usersRouter = require('./routes/dashboard');
 var citiesRouter = require('./routes/cities');
 var projectsRouter = require('./routes/projects');
 var buildersRouter = require('./routes/builders');
@@ -67,13 +69,18 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 passport.use(user.createStrategy());
+passport.use((new FacebookStrategy({
+  clientID: "1115356572623329",
+  clientSecret: "5cd8f5b5c73d020985954f303a0940f2",
+  callbackURL: "http://localhost:3000/facebook/callback"
+}, facebookHandler)));
 passport.serializeUser(user.serializeUser());
 passport.deserializeUser(user.deserializeUser());
 
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/dashboard', usersRouter);
 app.use('/api', apiKeyAuth({ getSecret }), citiesRouter);
 app.use('/api', apiKeyAuth({ getSecret }), projectsRouter);
 app.use('/api', apiKeyAuth({ getSecret }), buildersRouter);

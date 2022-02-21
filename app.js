@@ -74,10 +74,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/cities', apiKeyAuth({ getSecret }), citiesRouter);
-app.use('/projects', apiKeyAuth({ getSecret }), projectsRouter);
-app.use('/builders', apiKeyAuth({ getSecret }), buildersRouter);
-app.use('/searchall', apiKeyAuth({ getSecret }), searchRouter);
+app.use('/api', apiKeyAuth({ getSecret }), citiesRouter);
+app.use('/api', apiKeyAuth({ getSecret }), projectsRouter);
+app.use('/api', apiKeyAuth({ getSecret }), buildersRouter);
+app.use('/api', apiKeyAuth({ getSecret }), searchRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

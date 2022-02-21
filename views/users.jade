@@ -1,9 +1,11 @@
 extends layout
 
 block javascripts
-  link(rel='stylesheet' media='all' href='https://s3.amazonaws.com/dynatable-docs-assets/css/jquery.dynatable.css')
-  script(type='text/javascript' src='https://s3.amazonaws.com/dynatable-docs-assets/js/jquery.dynatable.js')
-  script(type='text/javascript' src='https://s3.amazonaws.com/dynatable-docs-assets/js/highcharts.js')
+  link(rel='stylesheet' media='all' href='/stylesheets/jquery.dynatable.css')
+  script(type='text/javascript' src='/javascripts/jquery.dynatable.js')
+  script(type='text/javascript' src='/javascripts/highcharts.js')
+  script(type='text/javascript' src='/javascripts/hmac-sha256.js')
+  script(type='text/javascript' src='/javascripts/enc-base64-min.js')
 
 block content
   h1= title
@@ -17,5 +19,12 @@ block content
         th Some Attribute
         th Some Other Attribute
     tbody
-  script(type='text/javascript' src='/script.js')
+  table#city-table
+    thead
+      tr
+        th Id
+        th Name
+        th Pincode
+    tbody
+  script(type='text/javascript' src='/javascripts/script.js')
       

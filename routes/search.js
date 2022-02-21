@@ -9,7 +9,7 @@ const { project, builder, city } = sequelize.models;
 /**
  * search all implementation
  */
-router.get('/:search', connectEnsureLogin.ensureLoggedIn(), async function(req, res) {
+router.get('/searchall/:search', connectEnsureLogin.ensureLoggedIn(), async function(req, res) {
   res.send(await async.parallel({
     cities: callback => city.findAll({
       where:{

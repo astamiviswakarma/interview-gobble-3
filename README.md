@@ -17,6 +17,13 @@ $ npm start
 open browser with http://localhost:3000
 ```
 
+### steps to run tests for this project
+```
+$ npm install
+$ node sqlite-example-database/setup.js ## you can skip this step if already done this on the project
+$ npm test
+```
+
 ### setup database
 run following to setup database
 

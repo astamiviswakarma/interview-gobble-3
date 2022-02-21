@@ -22,32 +22,6 @@ router.get('/login', function(req, res, next) {
 /**
  * login handler for local database
  */
-router.post('/login', passport.authenticate('local', { successReturnToOrRedirect: '/users', failureRedirect: '/login' }));
-
-/**
- * search all implementation
- */
-router.get('/searchall/:search', connectEnsureLogin.ensureLoggedIn(), async function(req, res) {
-  res.send(await async.parallel({
-    cities: callback => city.findAll({
-      where:{
-        name: {[Op.substring]: req.params.search}
-      }})
-      .then((data) => callback(null, data))
-      .catch(err => callback(null, [])),
-    projects: callback => project.findAll({
-      where:{
-        name: {[Op.substring]: req.params.search}
-      }})
-      .then((data) => callback(null, data))
-      .catch(err => callback(null, [])),
-    builders: callback => builder.findAll({
-      where:{
-        name: {[Op.substring]: req.params.search}
-      }})
-      .then((data) => callback(null, data))
-      .catch(err => callback(null, [])),
-  }));
-});
+router.post('/login', passport.authenticate('local', { successReturnToOrRedirect: '/', failureRedirect: '/login' }));
 
 module.exports = router;

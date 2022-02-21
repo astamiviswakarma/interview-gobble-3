@@ -4,8 +4,7 @@ const connectEnsureLogin = require('connect-ensure-login');
 
 /* GET authenticated users listing. */
 router.get('/', connectEnsureLogin.ensureLoggedIn(), function(req, res) {
-  console.log(req.user)
-  res.send('respond with a resource for ' + req.user.username);
+  res.render('users', { title: 'Express', user: req.user.username });
 });
 
 module.exports = router;

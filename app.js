@@ -4,8 +4,10 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const bodyParser = require('body-parser');
-const session = require('express-session');  
+const session = require('express-session');
 const passport = require('passport');
+const apiKeyAuth = require('api-key-auth');
+
 const sequelize = require('./sequelize');
 const { user } = sequelize.models;
 
@@ -14,6 +16,7 @@ var usersRouter = require('./routes/users');
 var citiesRouter = require('./routes/cities');
 var projectsRouter = require('./routes/projects');
 var buildersRouter = require('./routes/builders');
+var searchRouter = require('./routes/search');
 
 var app = express();
 
@@ -25,6 +28,32 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+// Create the collection of api keys
+const apiKeys = new Map();
+apiKeys.set('123456789', {
+  id: 1,
+  name: 'app1',
+  secret: 'secret1'
+});
+
+apiKeys.set('987654321', {
+  id: 2,
+  name: 'app2',
+  secret: 'secret2'
+});
+
+// Your function to get the secret associated to the key id
+function getSecret(keyId, done) {
+  if (!apiKeys.has(keyId)) {
+    return done(new Error('Unknown api key'));
+  }
+  const clientApp = apiKeys.get(keyId);
+  done(null, clientApp.secret, {
+    id: clientApp.id,
+    name: clientApp.name
+  });
+}
 
 app.use(session({
   secret: 'Y@%n9ssnQZgyjCAG&KP4gXJZ$s9RXnh2ETVgxDquSxAySaj^',
@@ -45,9 +74,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/cities', citiesRouter);
-app.use('/projects', projectsRouter);
-app.use('/builders', buildersRouter);
+app.use('/cities', apiKeyAuth({ getSecret }), citiesRouter);
+app.use('/projects', apiKeyAuth({ getSecret }), projectsRouter);
+app.use('/builders', apiKeyAuth({ getSecret }), buildersRouter);
+app.use('/searchall', apiKeyAuth({ getSecret }), searchRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

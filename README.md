@@ -8,6 +8,14 @@ demo project for interview.
  3) lib/facebook-handler.js needs to be refactored.
 > db schema is generated with `sqlite-example-database/setup.js`
 
+### steps for running this project
+```
+$ npm install
+$ node sqlite-example-database/setup.js ## you can skip this step if already done this on the project
+$ npm start
+
+open browser with http://localhost:3000
+```
 
 ### setup database
 run following to setup database
